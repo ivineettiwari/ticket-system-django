@@ -20,13 +20,34 @@ function getURL() {
                 $("#dataTable tbody").append("<tr><td>" + data.id + "</td><td>" + data.subject + "</td><td>"
                     + data.discription + "</td><td>"
                     + data.ticket_type + "</td><td>"
-                    + `<button id=${index}>Delete</button>` + "</td></tr>");
+                    + `<button id=${index}>Delete</button>/<button class="edit-button" data-id=${data.id}>Edit</button>` + "</td></tr>");
             });
+            setEdit()
+           
         },
         error: function (xhr, errmsg, err) {
             console.log(xhr.status + ": " + xhr.responseText);
             // Handle errors here
         }
+    });
+}
+
+function setEdit(){
+    $('.edit-button').click(function() {
+        var instanceId = $(this).data('id');
+        // Make AJAX request to load the edit form
+        $.ajax({
+            url: '/api/load_edit_form/' + instanceId + '/',
+            type: 'GET',
+            success: function(response) {
+                $('#edit-form-container').html(response);
+                document.getElementById('set-form').style.display = 'none';
+                setUpdate();
+            },
+            error: function(xhr, status, error) {
+                console.error(xhr.responseText);
+            }
+        });
     });
 }
 
@@ -70,7 +91,7 @@ function callAPI() {
 
 const table = document.querySelector("table");
 table.addEventListener("click", (e) => {
-    if (e.target.localName == "button") {
+    if (e.target.localName == "button" && e.target?.className != 'edit-button') {
         let data = {
             id: parseInt(e.target.id),
             discription: "New DATA"

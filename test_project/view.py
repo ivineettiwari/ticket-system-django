@@ -17,7 +17,6 @@ from django.core.mail import EmailMessage, send_mail, send_mass_mail
 def check_session(view_func):
     def wrapped_view(request, *args, **kwargs):
         # Perform session checking logic here
-        print()
         # if not request.session.get('username'):
         if 'username' not in request.COOKIES:
             # return HttpResponseForbidden("Session not valid. Please log in.")
@@ -131,7 +130,6 @@ def index(request):
     ticket_list = Ticket.objects.all().values()
     ticket_list = list(ticket_list)
     form = AppForm()
-
     template = loader.get_template('index.html')
     context = {
         'ticket' : ticket_list,

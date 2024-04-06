@@ -5,7 +5,6 @@ class ModelBackend(BaseBackend):
     def authenticate(request, username=None, password=None):
         try:
             user = LoginDetails.objects.filter(username=username).values()[0]
-            print(user)
             if user.get('password') == password:
                 return user
             else:

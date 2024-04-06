@@ -6,6 +6,7 @@ class Ticket(models.Model):
     ticket_type = models.CharField(max_length=255, null=False, blank=False, default=None)
     comment = models.CharField(max_length=255, null=False, blank=False, default=None)
     active = models.BooleanField(default=True)
+    file = models.FileField(upload_to='public/')
 
 class Employee(models.Model):
     empcode = models.CharField(max_length=255, null=False, blank=False, default=None)

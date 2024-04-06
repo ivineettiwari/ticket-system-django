@@ -17,11 +17,13 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, re_path, include
 
+from myapp.view import edit_view
 from test_project import view
 
 urlpatterns = [
     path('', view.index,name = 'index'),
     path('new', view.index_new,name = 'index_new'),
+    path('api/load_edit_form/<pk>/', edit_view, name='load_edit_form'),
     re_path(r'^api/', include('myapp.urls')),
     path('admin/', admin.site.urls),
     path('userdata', view.userdata),

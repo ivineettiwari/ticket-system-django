@@ -16,18 +16,6 @@
   </head>
 
   <body>
-    <!-- {% if ticket %}
-      <table border="1">
-        {% for x in ticket %}
-        <tr>
-          <td>Subject : {{ x.1.subject }}</td>
-          <td>Description : {{ x.1.discription }}</td>
-          <td>Type : {{ x.1.ticket_type }}</td>
-          <td><button id="{{x.0}}">Delete</button></td>
-        </tr>
-        {% endfor %}
-      </table>
-    {% endif %} -->
     <a href="#" class="button" id="hideButton">Hide Link</a>
       <table id="dataTable" border="1">
         <thead>
@@ -44,26 +32,14 @@
         </tbody>
       </table>
     <br>
-    <div style="margin:0 20%;">
+    <div style="margin:0 20%;" id="set-form">
       {% block content %}
           {% include 'upload_form.html' %}
       {% endblock %}
     </div>
-    <!-- <div style="margin:0 20%;">
-      <input id="input-data-subject" placeholder="subject" type="text"/><br /><br />
-      <textarea id="input-data-discription" placeholder="discription"></textarea
-      ><br /><br />
-      <label for="ticket-type">Choose a Ticket Type:</label><br /><br />
-      <select id="ticket-type">
-        <option value="Data Manupalation">Data Manupalation</option>
-        <option value="Query">Query</option>
-        <option value="Defect" selected>Defect</option>
-        <option value="Access Request">Access Request</option></select
-      ><br /><br />
-        <div style="display: flex; align-items: center; justify-content: center;">
-          <button onclick="callAPI()"  >Log a ticket</button>
-        </div>
-    </div> -->
+    <div style="margin:0 20%;" id="edit-form-container">
+      <!-- Edit form will be loaded here -->
+    </div>
   </body>
 
   <script src="{% static 'script.js' %}"></script>

@@ -39,15 +39,49 @@ def ticket(request):
         ticket_type = form_data.get('ticket_type')
         comment = form_data.get('comment')
         active = form_data.get('active')
+        file = files_data.get('file')
         if active == 'on':
             active = True
         else: 
             active = False
-        print(form_data)
-        mem = Ticket(subject = subject,discription = discription, ticket_type=ticket_type, comment=comment, active= active)
+            
+        mem = Ticket(subject = subject,discription = discription, ticket_type=ticket_type, comment=comment, active= active, file=file)
         mem.full_clean()
         mem.save()
         return JsonResponse({'message' : 'context'}, status = 200)
     except Exception as e :
         print(e)
         return JsonResponse({'message' : 'ERROR in updatedelete'}, safe=False, status = 500)  
+    
+
+@require_http_methods(['POST','GET'])
+@csrf_exempt
+@check_session 
+def edit_view(request,pk):
+    instance = Ticket.objects.get(pk=pk)
+    if request.method == 'POST':
+        form = AppForm(request.POST, instance=instance)
+        files_data = request.FILES
+        print(files_data)
+        if form.is_valid():
+            # Extract form data
+            subject = form.cleaned_data['subject']
+            discription = form.cleaned_data['discription']
+            ticket_type = form.cleaned_data['ticket_type']
+            comment = form.cleaned_data['comment']
+            active = form.cleaned_data['active']
+            file = files_data.get('file')
+
+            # Update instance with form data
+            instance.subject = subject
+            instance.discription = discription
+            instance.ticket_type = ticket_type
+            instance.comment = comment
+            instance.active = active
+            instance.file = file
+            instance.save()  # Save the updated instance
+            
+            return JsonResponse({'message': 'Data updated successfully'}, status=200)
+    else:
+        form = AppForm(instance=instance)
+    return render(request, 'edit.html', {'form': form, 'url':'/api/load_edit_form/'+pk+'/'})
