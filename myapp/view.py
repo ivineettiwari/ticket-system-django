@@ -45,6 +45,7 @@ def ticket(request):
         else: 
             active = False
             
+        print(file)
         mem = Ticket(subject = subject,discription = discription, ticket_type=ticket_type, comment=comment, active= active, file=file)
         mem.full_clean()
         mem.save()
@@ -62,7 +63,6 @@ def edit_view(request,pk):
     if request.method == 'POST':
         form = AppForm(request.POST, instance=instance)
         files_data = request.FILES
-        print(files_data)
         if form.is_valid():
             # Extract form data
             subject = form.cleaned_data['subject']
@@ -78,7 +78,8 @@ def edit_view(request,pk):
             instance.ticket_type = ticket_type
             instance.comment = comment
             instance.active = active
-            instance.file = file
+            if file:
+                instance.file = file
             instance.save()  # Save the updated instance
             
             return JsonResponse({'message': 'Data updated successfully'}, status=200)
