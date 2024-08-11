@@ -133,3 +133,6 @@ class TodoForm(FlaskForm):
     </ul>
 </body>
 </html>
+
+
+pip install Flask Flask-SQLAlchemy Flask-WTF
